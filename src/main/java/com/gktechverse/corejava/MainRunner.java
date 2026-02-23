@@ -4,6 +4,7 @@ import com.gktechverse.corejava.basics.AccessModifiersDemo;
 import com.gktechverse.corejava.basics.DataTypesDemo;
 import com.gktechverse.corejava.basics.TypeCastingDemo;
 import com.gktechverse.corejava.basics.VariablesDemo;
+import com.gktechverse.corejava.collections.CollectionsFrameworkInterviewDemo;
 import com.gktechverse.corejava.exceptions.CheckedVsUncheckedDemo;
 import com.gktechverse.corejava.exceptions.CustomExceptionDemo;
 import com.gktechverse.corejava.exceptions.TryCatchFinallyDemo;
@@ -43,6 +44,7 @@ public class MainRunner {
             System.out.println("3. OOPs");
             System.out.println("4. Exceptions");
             System.out.println("5. Strings");
+            System.out.println("6. Collections Framework");
             System.out.println("0. Exit");
             System.out.print("Select a topic: ");
 
@@ -54,6 +56,7 @@ public class MainRunner {
                 case "3" -> runOops();
                 case "4" -> runExceptions();
                 case "5" -> runStrings();
+                case "6" -> runCollections();
                 case "0" -> {
                     System.out.println("Thanks for practicing Core Java. Keep revising!");
                     scanner.close();
@@ -103,5 +106,9 @@ public class MainRunner {
         EqualsVsDoubleEqualsDemo.main(new String[]{});
         StringBuilderVsBufferDemo.main(new String[]{});
         ImmutabilityDemo.main(new String[]{});
+    }
+
+    private static void runCollections() {
+        CollectionsFrameworkInterviewDemo.main(new String[]{});
     }
 }

@@ -34,6 +34,8 @@ It helps learners:
   - Checked vs Unchecked, Try-Catch-Finally, Custom Exception
 - `com.gktechverse.corejava.strings`
   - String Pool, equals vs ==, StringBuilder vs StringBuffer, Immutability
+- `com.gktechverse.corejava.collections`
+  - Collections Framework interview basics with real enterprise scenarios
 - `com.gktechverse.corejava.MainRunner`
   - Console menu to run demos by topic
 
