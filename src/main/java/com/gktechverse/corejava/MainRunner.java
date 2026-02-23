@@ -23,6 +23,11 @@ import com.gktechverse.corejava.oops.MethodHidingDemo;
 import com.gktechverse.corejava.oops.PolymorphismDemo;
 import com.gktechverse.corejava.oops.SuperKeywordDemo;
 import com.gktechverse.corejava.oops.ThisKeywordDemo;
+import com.gktechverse.corejava.staticmemory.HeapStackAndObjectCreationDemo;
+import com.gktechverse.corejava.staticmemory.SingletonVsStaticDemo;
+import com.gktechverse.corejava.staticmemory.StaticBlockVsVariableDemo;
+import com.gktechverse.corejava.staticmemory.StaticKeywordDemo;
+import com.gktechverse.corejava.staticmemory.StaticMembersAndBlockDemo;
 import com.gktechverse.corejava.strings.EqualsVsDoubleEqualsDemo;
 import com.gktechverse.corejava.strings.ImmutabilityDemo;
 import com.gktechverse.corejava.strings.StringBuilderVsBufferDemo;
@@ -45,6 +50,7 @@ public class MainRunner {
             System.out.println("4. Exceptions");
             System.out.println("5. Strings");
             System.out.println("6. Collections Framework");
+            System.out.println("7. Static & Memory Concepts");
             System.out.println("0. Exit");
             System.out.print("Select a topic: ");
 
@@ -57,6 +63,7 @@ public class MainRunner {
                 case "4" -> runExceptions();
                 case "5" -> runStrings();
                 case "6" -> runCollections();
+                case "7" -> runStaticAndMemory();
                 case "0" -> {
                     System.out.println("Thanks for practicing Core Java. Keep revising!");
                     scanner.close();
@@ -110,5 +117,13 @@ public class MainRunner {
 
     private static void runCollections() {
         CollectionsFrameworkInterviewDemo.main(new String[]{});
+    }
+
+    private static void runStaticAndMemory() {
+        StaticKeywordDemo.main(new String[]{});
+        StaticMembersAndBlockDemo.main(new String[]{});
+        StaticBlockVsVariableDemo.main(new String[]{});
+        SingletonVsStaticDemo.main(new String[]{});
+        HeapStackAndObjectCreationDemo.main(new String[]{});
     }
 }
