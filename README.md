@@ -43,7 +43,7 @@ It helps learners:
 
 ## Playlist Link
 
-> Add playlist URL here: `https://youtube.com/your-playlist-link`
+> Add playlist URL here: `https://www.youtube.com/playlist?list=PLJIssYACbrL2UABIdAbvAZsfrEbFvHINI`
 
 ## How to Run
 
