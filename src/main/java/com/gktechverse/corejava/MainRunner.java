@@ -5,6 +5,7 @@ import com.gktechverse.corejava.basics.DataTypesDemo;
 import com.gktechverse.corejava.basics.TypeCastingDemo;
 import com.gktechverse.corejava.basics.VariablesDemo;
 import com.gktechverse.corejava.collections.CollectionsFrameworkInterviewDemo;
+import com.gktechverse.corejava.collections.hashmap.HashMapTeachingSeriesRunner;
 import com.gktechverse.corejava.exceptions.CheckedVsUncheckedDemo;
 import com.gktechverse.corejava.exceptions.CustomExceptionDemo;
 import com.gktechverse.corejava.exceptions.TryCatchFinallyDemo;
@@ -117,6 +118,7 @@ public class MainRunner {
 
     private static void runCollections() {
         CollectionsFrameworkInterviewDemo.main(new String[]{});
+        HashMapTeachingSeriesRunner.main(new String[]{});
     }
 
     private static void runStaticAndMemory() {

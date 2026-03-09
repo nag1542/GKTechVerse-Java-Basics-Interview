@@ -36,6 +36,10 @@ It helps learners:
   - String Pool, equals vs ==, StringBuilder vs StringBuffer, Immutability
 - `com.gktechverse.corejava.collections`
   - Collections Framework interview basics with real enterprise scenarios
+- `com.gktechverse.corejava.collections.hashmap.*`
+  - HashMap deep dive: null key/value behavior, duplicate keys, collision buckets, linked-list to tree conversion rules, and thread-safety limitations
+- `com.gktechverse.corejava.collections.concurrenthashmap`
+  - ConcurrentHashMap concurrency benefits and atomic update patterns
 - `com.gktechverse.corejava.staticmemory`
   - Static keyword, static members, static blocks, Singleton vs static, Heap vs Stack, object creation flow
 - `com.gktechverse.corejava.MainRunner`
