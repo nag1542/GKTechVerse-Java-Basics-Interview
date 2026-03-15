@@ -12,6 +12,8 @@ import com.gktechverse.corejava.exceptions.TryCatchFinallyDemo;
 import com.gktechverse.corejava.jvm.BoxingUnboxingDemo;
 import com.gktechverse.corejava.jvm.ClassLoadingDemo;
 import com.gktechverse.corejava.jvm.MemoryAreasDemo;
+import com.gktechverse.corejava.multithreading.BankingTransferConsistencyAndDeadlockDemo;
+import com.gktechverse.corejava.multithreading.DeadlockEnterpriseUseCasesDemo;
 import com.gktechverse.corejava.oops.AbstractionDemo;
 import com.gktechverse.corejava.oops.AssociationAggregationCompositionDemo;
 import com.gktechverse.corejava.oops.ClassObjectDemo;
@@ -52,6 +54,7 @@ public class MainRunner {
             System.out.println("5. Strings");
             System.out.println("6. Collections Framework");
             System.out.println("7. Static & Memory Concepts");
+            System.out.println("8. Multithreading (Deadlock)");
             System.out.println("0. Exit");
             System.out.print("Select a topic: ");
 
@@ -65,6 +68,7 @@ public class MainRunner {
                 case "5" -> runStrings();
                 case "6" -> runCollections();
                 case "7" -> runStaticAndMemory();
+                case "8" -> runMultithreading();
                 case "0" -> {
                     System.out.println("Thanks for practicing Core Java. Keep revising!");
                     scanner.close();
@@ -127,5 +131,10 @@ public class MainRunner {
         StaticBlockVsVariableDemo.main(new String[]{});
         SingletonVsStaticDemo.main(new String[]{});
         HeapStackAndObjectCreationDemo.main(new String[]{});
+    }
+
+    private static void runMultithreading() {
+        DeadlockEnterpriseUseCasesDemo.main(new String[]{});
+        BankingTransferConsistencyAndDeadlockDemo.main(new String[]{});
     }
 }

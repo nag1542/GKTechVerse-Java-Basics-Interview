@@ -42,6 +42,8 @@ It helps learners:
   - ConcurrentHashMap concurrency benefits and atomic update patterns
 - `com.gktechverse.corejava.staticmemory`
   - Static keyword, static members, static blocks, Singleton vs static, Heap vs Stack, object creation flow
+- `com.gktechverse.corejava.multithreading`
+  - Deadlock deep dive with enterprise real-time use cases, bad code vs good code solutions
 - `com.gktechverse.corejava.MainRunner`
   - Console menu to run demos by topic
 
@@ -217,6 +219,138 @@ public class ObjectCreationFlow {
     }
 }
 ```
+
+## Multithreading: Deadlock Detailed Explanation (Tech Video Notes)
+
+Runnable demo classes:
+- `com.gktechverse.corejava.multithreading.DeadlockEnterpriseUseCasesDemo`
+- `com.gktechverse.corejava.multithreading.BankingTransferConsistencyAndDeadlockDemo`
+
+Run directly:
+```bash
+mvn -Dexec.mainClass="com.gktechverse.corejava.multithreading.DeadlockEnterpriseUseCasesDemo" exec:java
+mvn -Dexec.mainClass="com.gktechverse.corejava.multithreading.BankingTransferConsistencyAndDeadlockDemo" exec:java
+```
+
+### Why do threads need to "wait" in enterprise systems?
+In real-time applications, multiple requests update the same shared data (ledger rows, stock tables, order records).
+Without coordination, data becomes inconsistent (double debit, negative stock, duplicate order update).
+So we use locks/synchronization to protect critical sections.
+
+But poor locking strategy can cause **indefinite waiting**:
+- Thread-1 holds Lock-A and waits for Lock-B.
+- Thread-2 holds Lock-B and waits for Lock-A.
+- Both are blocked forever -> this is deadlock.
+
+### Deadlock Conditions (Coffman conditions simplified)
+Deadlock usually appears when all conditions are true:
+1. **Mutual exclusion** – resource can be used by one thread at a time.
+2. **Hold and wait** – thread holds one lock and waits for another.
+3. **No preemption** – lock cannot be forcefully taken away.
+4. **Circular wait** – circular chain of threads waiting on each other.
+
+Break even one condition to avoid deadlock.
+
+---
+
+
+### Demo-2: Banking System (A and B send money at exact same millisecond)
+
+#### Case A: Without lock (no synchronization)
+If transfer logic updates balances without a lock, debit/credit is not atomic:
+- Thread-1 may read old balance of A and write new value.
+- At the same time, Thread-2 may also read/write stale values.
+- One update can overwrite another update (lost update).
+
+Impact:
+- Total money may become inconsistent in memory.
+- Customer balances can appear wrong temporarily or permanently.
+- Audit/reconciliation effort increases.
+
+#### Case B: Bad locking code
+If we add nested locks in different order:
+- A->B flow: lock A then lock B.
+- B->A flow: lock B then lock A.
+
+Issue:
+- Both threads can block forever (deadlock).
+- Transactions timeout and payment throughput drops.
+
+#### Case C: Good locking code (ordered lock)
+Use one global order for lock acquisition:
+- Always lock lower account-id first, then higher account-id.
+
+Why this solves:
+- Circular wait is removed.
+- Threads may wait briefly, but they do not wait forever.
+- Balances stay consistent and operations complete reliably.
+
+### Use Case 1: Banking Settlement Service
+
+#### BAD CODE pattern (problem)
+Two parallel transfers lock ledgers in opposite order:
+- A->B flow locks `BANK-A`, then tries `BANK-B`.
+- B->A flow locks `BANK-B`, then tries `BANK-A`.
+
+Result:
+- Both threads keep waiting.
+- Settlement queue blocks.
+- SLA breaches and reconciliation delays happen.
+
+#### GOOD CODE pattern (solution)
+Use **global lock ordering**:
+- Always acquire ledger locks in deterministic order (e.g., lexical order or by account id).
+- Even if request direction is opposite, lock order stays same.
+
+Why it works:
+- Circular wait is removed.
+- Threads may still wait briefly, but they eventually proceed.
+
+---
+
+### Use Case 2: E-commerce Order + Inventory Services
+
+#### BAD CODE pattern (problem)
+- Checkout flow locks `ORDER` then `INVENTORY`.
+- Reconciliation flow locks `INVENTORY` then `ORDER`.
+
+Result:
+- Checkout freezes intermittently during traffic spikes.
+- Inventory adjustments stop.
+- Users see failures/timeouts.
+
+#### GOOD CODE pattern (solution)
+Use **`ReentrantLock#tryLock(timeout)` + retry/backoff**:
+- Try acquiring first lock with timeout.
+- Try second lock with timeout.
+- If second lock fails: release first lock immediately, wait briefly (backoff), retry.
+
+Why it works:
+- No infinite waiting.
+- System degrades gracefully under contention.
+- Helps preserve availability in high traffic windows.
+
+---
+
+### Bad Coding vs Good Coding Checklist
+
+#### Bad coding (risk of deadlock)
+- Lock order depends on request path.
+- Nested synchronized blocks across multiple resources without standard order.
+- No timeout/no rollback strategy.
+- Large critical sections with DB/API calls inside lock.
+
+#### Good coding (safe & scalable)
+- Define and enforce one lock acquisition order across services.
+- Prefer timed lock attempts (`tryLock`) for cross-resource operations.
+- Keep lock scope very small (only critical mutation logic).
+- Release lock quickly; never do long I/O under lock.
+- Add retries, backoff, and observability (thread dumps, metrics, lock wait logs).
+
+---
+
+### Interview-friendly one-liner
+**Deadlock is not just a Java syntax issue; it is a production reliability issue caused by inconsistent resource locking across concurrent business flows.**
 
 ---
 
