@@ -14,6 +14,7 @@ import com.gktechverse.corejava.jvm.ClassLoadingDemo;
 import com.gktechverse.corejava.jvm.MemoryAreasDemo;
 import com.gktechverse.corejava.multithreading.BankingTransferConsistencyAndDeadlockDemo;
 import com.gktechverse.corejava.multithreading.DeadlockEnterpriseUseCasesDemo;
+import com.gktechverse.corejava.multithreading.MultithreadingEnterpriseVideoRunner;
 import com.gktechverse.corejava.oops.AbstractionDemo;
 import com.gktechverse.corejava.oops.AssociationAggregationCompositionDemo;
 import com.gktechverse.corejava.oops.ClassObjectDemo;
@@ -54,7 +55,7 @@ public class MainRunner {
             System.out.println("5. Strings");
             System.out.println("6. Collections Framework");
             System.out.println("7. Static & Memory Concepts");
-            System.out.println("8. Multithreading (Deadlock)");
+            System.out.println("8. Multithreading (Enterprise + Deadlock)");
             System.out.println("0. Exit");
             System.out.print("Select a topic: ");
 
@@ -134,6 +135,7 @@ public class MainRunner {
     }
 
     private static void runMultithreading() {
+        MultithreadingEnterpriseVideoRunner.main(new String[]{});
         DeadlockEnterpriseUseCasesDemo.main(new String[]{});
         BankingTransferConsistencyAndDeadlockDemo.main(new String[]{});
     }
