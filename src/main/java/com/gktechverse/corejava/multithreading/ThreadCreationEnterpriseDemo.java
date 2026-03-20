@@ -38,7 +38,12 @@ public class ThreadCreationEnterpriseDemo {
         @Override
         public void run() {
             DemoLogger.info("Started settlement for order " + orderId);
-            sleep(150);
+            try {
+				sleep(150);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
             DemoLogger.info("Settlement done for order " + orderId);
         }
     }
