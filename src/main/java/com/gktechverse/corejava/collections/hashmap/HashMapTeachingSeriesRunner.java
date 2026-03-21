@@ -1,6 +1,7 @@
 package com.gktechverse.corejava.collections.hashmap;
 
 import com.gktechverse.corejava.collections.concurrenthashmap.ConcurrentHashMapBenefitsDemo;
+import com.gktechverse.corejava.collections.hashmap.equalsandhashcode.EqualsHashCodeContractDemo;
 import com.gktechverse.corejava.collections.hashmap.internalworking.HashMapCollisionAndTreeificationDemo;
 import com.gktechverse.corejava.collections.hashmap.nullsandduplicates.HashMapNullAndDuplicateKeyDemo;
 import com.gktechverse.corejava.collections.hashmap.threadsafety.HashMapThreadSafetyDemo;
@@ -15,6 +16,7 @@ public class HashMapTeachingSeriesRunner {
         HashMapNullAndDuplicateKeyDemo.main(new String[]{});
         HashMapCollisionAndTreeificationDemo.main(new String[]{});
         HashMapThreadSafetyDemo.main(new String[]{});
+        EqualsHashCodeContractDemo.main(new String[]{});
         ConcurrentHashMapBenefitsDemo.main(new String[]{});
     }
 }
