@@ -36,6 +36,8 @@ It helps learners:
   - String Pool, equals vs ==, StringBuilder vs StringBuffer, Immutability
 - `com.gktechverse.corejava.collections`
   - Collections Framework interview basics with real enterprise scenarios
+- `com.gktechverse.corejava.collections.CollectionsEcommerceSelectionDemo`
+  - Enterprise selection guide for List/Set/Map/Queue/PriorityQueue and fail-fast vs fail-safe iterators
 - `com.gktechverse.corejava.collections.hashmap.*`
   - HashMap deep dive: null key/value behavior, duplicate keys, collision buckets, linked-list to tree conversion rules, and thread-safety limitations
 - `com.gktechverse.corejava.collections.concurrenthashmap`
@@ -355,3 +357,8 @@ Why it works:
 ---
 
 If this project helps you, star the repo and use it as your interview revision notebook.
+
+## Java Collections Enterprise Notes
+
+A dedicated guide is available at `JAVA_COLLECTIONS_README.md` covering when to use `ArrayList`, `LinkedList`, `HashSet`, `LinkedHashSet`, `TreeSet`, `HashMap`, `LinkedHashMap`, `TreeMap`, `Queue`, `PriorityQueue`, and iterator behavior (fail-fast vs fail-safe).
+
