@@ -51,7 +51,8 @@ It helps learners:
 
 ## Playlist Link
 
-> Add playlist URL here: `https://www.youtube.com/playlist?list=PLJIssYACbrL2UABIdAbvAZsfrEbFvHINI`
+> Crack Core Java Interviews – Beginner: `https://www.youtube.com/playlist?list=PLJIssYACbrL2UABIdAbvAZsfrEbFvHINI`
+> Java Interview Prep — Core Concepts & Real Production Explanations:`https://www.youtube.com/playlist?list=PLJIssYACbrL06EAvIexF4FiTWNHwbAhfd`
 
 ## How to Run
 
