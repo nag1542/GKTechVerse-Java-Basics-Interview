@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 /**
  * Interview focus: Collections Framework basics explained with enterprise-style scenarios.
@@ -32,6 +33,7 @@ public class CollectionsFrameworkInterviewDemo {
         equalsVsHashCode();
         overridingEqualsAndHashCodeTogether();
         sameHashCodeBehavior();
+        streamVsLoopsUseCases();
     }
 
     private static void explainCollectionAndFramework() {
@@ -164,6 +166,53 @@ public class CollectionsFrameworkInterviewDemo {
         System.out.println("Same hashCode does not mean objects are equal. HashMap handles collision using equals() checks in the bucket.");
         System.out.println("Retrieved tier for key1: " + customerTier.get(key1));
         System.out.println("Retrieved tier for key2: " + customerTier.get(key2));
+    }
+
+    private static void streamVsLoopsUseCases() {
+        System.out.println("\n14) Stream vs Loop: when should we use what?");
+
+        List<Integer> invoiceAmounts = Arrays.asList(1200, 900, 2500, 400, 1800, 3000);
+
+        List<Integer> highValueInvoicesUsingLoop = new ArrayList<>();
+        for (Integer amount : invoiceAmounts) {
+            if (amount >= 1500) {
+                highValueInvoicesUsingLoop.add(amount);
+            }
+        }
+
+        List<Integer> highValueInvoicesUsingStream = invoiceAmounts.stream()
+                .filter(amount -> amount >= 1500)
+                .collect(Collectors.toList());
+
+        int sumWithLoop = 0;
+        for (Integer amount : invoiceAmounts) {
+            sumWithLoop += amount;
+        }
+
+        int sumWithStream = invoiceAmounts.stream().reduce(0, Integer::sum);
+
+        System.out.println("Data set (invoice amounts): " + invoiceAmounts);
+        System.out.println("Loop result (>= 1500): " + highValueInvoicesUsingLoop);
+        System.out.println("Stream result (>= 1500): " + highValueInvoicesUsingStream);
+        System.out.println("Total by loop: " + sumWithLoop + ", total by stream: " + sumWithStream);
+
+        System.out.println("\nWhen to prefer Streams:");
+        System.out.println("- For data transformation pipelines (filter -> map -> sort -> collect).\n"
+                + "  Example: convert orders into DTOs for API response in a single readable flow.");
+        System.out.println("- For aggregate operations (count, max, average, grouping).\n"
+                + "  Example: dashboard metrics from transaction lists.");
+        System.out.println("- For declarative style where 'what to do' is clearer than 'how to iterate'.");
+
+        System.out.println("\nWhen to prefer Loops:");
+        System.out.println("- When you need index-based logic (previous/next comparison, in-place update).\n"
+                + "  Example: compare current day sales with previous day in an array.");
+        System.out.println("- When early break/continue is required for imperative control flow.\n"
+                + "  Example: stop scanning as soon as a fraud transaction is found.");
+        System.out.println("- When debugging step-by-step mutation is easier with explicit state variables.");
+
+        System.out.println("\nInterview takeaway:");
+        System.out.println("Use Streams for readable bulk operations on collections; "
+                + "use loops for low-level control, complex branching, and index-sensitive logic.");
     }
 
     /**
