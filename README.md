@@ -46,6 +46,8 @@ It helps learners:
   - Static keyword, static members, static blocks, Singleton vs static, Heap vs Stack, object creation flow
 - `com.gktechverse.corejava.multithreading`
   - Deadlock deep dive with enterprise real-time use cases, bad code vs good code solutions
+- `com.gktechverse.corejava.streams`
+  - Loop vs Stream, lazy evaluation behavior, and most useful stream patterns (grouping/counting/aggregation/flatMap/short-circuit/parallel-streams/top-20-practice)
 - `com.gktechverse.corejava.MainRunner`
   - Console menu to run demos by topic
 
