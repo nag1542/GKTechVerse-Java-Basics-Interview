@@ -29,6 +29,7 @@ import com.gktechverse.corejava.oops.PolymorphismDemo;
 import com.gktechverse.corejava.oops.SuperKeywordDemo;
 import com.gktechverse.corejava.oops.ThisKeywordDemo;
 import com.gktechverse.corejava.staticmemory.HeapStackAndObjectCreationDemo;
+import com.gktechverse.corejava.streams.StreamsInterviewRunner;
 import com.gktechverse.corejava.staticmemory.SingletonVsStaticDemo;
 import com.gktechverse.corejava.staticmemory.StaticBlockVsVariableDemo;
 import com.gktechverse.corejava.staticmemory.StaticKeywordDemo;
@@ -57,6 +58,7 @@ public class MainRunner {
             System.out.println("6. Collections Framework");
             System.out.println("7. Static & Memory Concepts");
             System.out.println("8. Multithreading (Enterprise + Deadlock)");
+            System.out.println("9. Streams (Loop vs Stream, Lazy Evaluation, Patterns)");
             System.out.println("0. Exit");
             System.out.print("Select a topic: ");
 
@@ -71,6 +73,7 @@ public class MainRunner {
                 case "6" -> runCollections();
                 case "7" -> runStaticAndMemory();
                 case "8" -> runMultithreading();
+                case "9" -> runStreams();
                 case "0" -> {
                     System.out.println("Thanks for practicing Core Java. Keep revising!");
                     scanner.close();
@@ -141,4 +144,9 @@ public class MainRunner {
         DeadlockEnterpriseUseCasesDemo.main(new String[]{});
         BankingTransferConsistencyAndDeadlockDemo.main(new String[]{});
     }
+
+    private static void runStreams() {
+        StreamsInterviewRunner.main(new String[]{});
+    }
 }
+
