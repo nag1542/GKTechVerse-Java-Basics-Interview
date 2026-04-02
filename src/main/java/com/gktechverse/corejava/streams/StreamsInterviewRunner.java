@@ -13,6 +13,15 @@ public class StreamsInterviewRunner {
         FlatMapPatternDemo.main(new String[]{});
         ShortCircuitOperationsDemo.main(new String[]{});
         ParallelStreamsCautionDemo.main(new String[]{});
+        LambdaExpressionsAndFunctionalInterfacesDemo.main(new String[]{});
+        FunctionalInterfaceGreetingDemo.main(new String[]{});
+        LambdaFormsDemo.main(new String[]{});
+        Java8BuiltInFunctionalInterfacesDemo.main(new String[]{});
+        LambdaScopeAndEffectiveFinalDemo.main(new String[]{});
+        LambdaFunctionComposeVsAndThenDemo.main(new String[]{});
+        LambdaReusabilityVsStreamConsumptionDemo.main(new String[]{});
+        LambdaBiFunctionBiPredicateBiConsumerDemo.main(new String[]{});
+        LambdaProductionBugsMistakesDemo.main(new String[]{});
         StreamInterviewPracticeTop20.main(new String[]{});
     }
 }

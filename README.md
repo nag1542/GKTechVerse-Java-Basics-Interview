@@ -47,7 +47,7 @@ It helps learners:
 - `com.gktechverse.corejava.multithreading`
   - Deadlock deep dive with enterprise real-time use cases, bad code vs good code solutions
 - `com.gktechverse.corejava.streams`
-  - Loop vs Stream, lazy evaluation behavior, and most useful stream patterns (grouping/counting/aggregation/flatMap/short-circuit/parallel-streams/top-20-practice)
+  - Loop vs Stream, lazy evaluation behavior, lambda expressions & functional interfaces, and most useful stream patterns (grouping/counting/aggregation/flatMap/short-circuit/parallel-streams/top-20-practice)
 - `com.gktechverse.corejava.MainRunner`
   - Console menu to run demos by topic
 
@@ -110,6 +110,189 @@ List<Integer> highValueStream = amounts.stream()
 - Use **Loops** when you need explicit control, index access, or early termination.
 
 > Runnable demo added in `CollectionsFrameworkInterviewDemo` under: **"Stream vs Loop: when should we use what?"**
+
+
+## WHY LAMBDAS EXIST — THE REAL REASON
+
+Lambdas were added to Java primarily to **pass behavior as data** with less boilerplate.
+Before Java 8, this usually required anonymous classes that were verbose and harder to read.
+
+```java
+// Old style (Java 7): anonymous class
+Collections.sort(names, new Comparator<String>() {
+    @Override
+    public int compare(String a, String b) {
+        return a.compareTo(b);
+    }
+});
+
+// Lambda style (Java 8): same behavior, less ceremony
+names.sort((a, b) -> a.compareTo(b));
+
+// Method reference style
+names.sort(String::compareTo);
+```
+
+**Problem lambdas solve:** repetitive ceremony for small behavior blocks (sorting, filtering, callbacks, validation), which became even more important with Stream API pipelines.
+
+**Yes — this definition is correct:** In Java you cannot pass a method as an argument directly. You pass an object. A lambda is a concise way to create an object of a functional interface that carries the behavior.
+
+
+
+Runnable examples:
+- `LambdaExpressionsAndFunctionalInterfacesDemo`
+- `FunctionalInterfaceGreetingDemo`
+- `LambdaFormsDemo`
+- `Java8BuiltInFunctionalInterfacesDemo`
+- `LambdaScopeAndEffectiveFinalDemo`
+- `LambdaFunctionComposeVsAndThenDemo`
+- `LambdaReusabilityVsStreamConsumptionDemo`
+- `LambdaBiFunctionBiPredicateBiConsumerDemo`
+- `LambdaProductionBugsMistakesDemo`
+
+
+## Different Lambda Forms (Quick Guide)
+
+```java
+// Form 1 — No parameters
+Runnable r = () -> System.out.println("running");
+
+// Form 2 — One parameter — parentheses optional
+Consumer<String> print = s -> System.out.println(s);
+
+// Form 3 — Multiple parameters — parentheses required
+Comparator<Integer> cmp = (a, b) -> a - b;
+
+// Form 4 — Multi-line body — braces + explicit return
+Function<String, Integer> parse = (s) -> {
+    if (s == null) return 0;
+    return Integer.parseInt(s);
+};
+
+// Form 5 — Method references
+Consumer<String> print2 = System.out::println;
+Function<String, Integer> len = String::length;
+Supplier<List<String>> make = ArrayList::new;
+```
+
+Runnable demo class: `LambdaFormsDemo`.
+
+
+## Java 8 Built-in Functional Interfaces (How to Use)
+
+Key demos included in `Java8BuiltInFunctionalInterfacesDemo`:
+- `Predicate<T>` composition using `.and()`, `.or()`, `.negate()`
+- `Function<T,R>` composition using `.andThen()` and `.compose()`
+- `Consumer<T>` chaining with `.andThen()` and usage in `stream().forEach()` / `Optional.ifPresent()`
+- `Supplier<T>` for object/time creation and lazy fallback with `Optional.orElseGet(...)`
+- `Collectors.toCollection(...)` with constructor reference supplier
+
+
+## Interview Q1: Outer Scope Variables in Lambda
+
+```java
+int multiplier = 3; // effectively final
+Function<Integer,Integer> triple = n -> n * multiplier;
+System.out.println(triple.apply(5)); // 15
+
+// multiplier = 4; // compile error: must be final or effectively final
+
+this.counter++; // instance variable access is allowed inside lambda
+```
+
+Runnable demo class: `LambdaScopeAndEffectiveFinalDemo`.
+
+
+## Interview Q2: Difference between `andThen` and `compose`
+
+```java
+Function<Integer,Integer> doubleIt = n -> n * 2;
+Function<Integer,Integer> addTen   = n -> n + 10;
+
+// andThen — left to right
+doubleIt.andThen(addTen).apply(5);  // 20
+
+// compose — right to left
+doubleIt.compose(addTen).apply(5);  // 30
+```
+
+Runnable demo class: `LambdaFunctionComposeVsAndThenDemo`.
+
+
+## Interview Q3: Are lambdas reusable?
+
+```java
+Predicate<String> isLong = s -> s.length() > 5;
+
+names.stream().filter(isLong).forEach(System.out::println);
+names.stream().filter(isLong).count();  // lambda reused safely
+
+Stream<String> s = names.stream().filter(isLong);
+s.count();    // OK
+// s.findAny(); // IllegalStateException: stream already consumed
+```
+
+Key point: **lambda objects are reusable**, but a **Stream instance is single-use**.
+
+Runnable demo class: `LambdaReusabilityVsStreamConsumptionDemo`.
+
+
+## Interview Q5: What is a `BiFunction`?
+
+```java
+// BiFunction<T,U,R> — takes 2 inputs, returns 1 result
+BiFunction<String, Integer, String> repeat = (s, n) -> s.repeat(n);
+repeat.apply("ha", 3); // hahaha
+
+// BiPredicate<T,U> — takes 2 inputs, returns boolean
+BiPredicate<String,Integer> longerThan = (s, n) -> s.length() > n;
+
+// BiConsumer<T,U> — takes 2 inputs, returns void
+map.forEach((key, value) -> System.out.println(key + "=" + value));
+```
+
+Use these when your logic naturally needs **two inputs** (e.g., key+value, text+count, value+threshold).
+
+Runnable demo class: `LambdaBiFunctionBiPredicateBiConsumerDemo`.
+
+
+## 3 Lambda Mistakes That Cause Production Bugs
+
+### Mistake 1 — Mutating state inside a lambda
+```java
+// int count = 0;
+// names.forEach(n -> count++); // compile error (effectively-final rule)
+
+int[] count = {0};
+names.parallelStream().forEach(n -> count[0]++); // race condition
+
+long safeCount = names.stream().filter(n -> n.startsWith("A")).count();
+int total = numbers.stream().reduce(0, Integer::sum);
+```
+
+### Mistake 2 — `orElse` with expensive computation
+```java
+// orElse — argument evaluated ALWAYS
+User user = findUser(id).orElse(createGuestUser());
+
+// orElseGet — Supplier evaluated only when Optional is empty
+User user = findUser(id).orElseGet(() -> createGuestUser());
+```
+
+Real impact: if `createGuestUser()` hits DB/service, `orElse` does extra work even when user exists.
+
+### Mistake 3 — Complex logic buried inside a lambda
+```java
+users.stream()
+    .filter(u -> u.getAge() > 18 && u.isActive() &&
+            u.getSubscriptions().stream().anyMatch(s -> s.getType().equals("PREMIUM")))
+    .toList();
+
+// Better: extract to named method
+users.stream().filter(this::isEligibleForPremium).toList();
+```
+
+Runnable demo class: `LambdaProductionBugsMistakesDemo`.
 
 ## Playlist Link
 
