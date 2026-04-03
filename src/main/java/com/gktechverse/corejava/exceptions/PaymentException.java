@@ -1,0 +1,22 @@
+package com.gktechverse.corejava.exceptions;
+
+/**
+ * Base unchecked domain exception for payment failures.
+ */
+public class PaymentException extends RuntimeException {
+    private final String errorCode;
+
+    public PaymentException(String message, String errorCode) {
+        super(message);
+        this.errorCode = errorCode;
+    }
+
+    public PaymentException(String message, String errorCode, Throwable cause) {
+        super(message, cause);
+        this.errorCode = errorCode;
+    }
+
+    public String getErrorCode() {
+        return errorCode;
+    }
+}
