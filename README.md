@@ -31,7 +31,7 @@ It helps learners:
     Interface vs Abstract Class, Final Keyword, Association/Aggregation/Composition,
     This Keyword, Super Keyword, Method Hiding
 - `com.gktechverse.corejava.exceptions`
-  - Checked vs Unchecked, Try-Catch-Finally, Custom Exception
+  - Checked vs Unchecked, Try-Catch-Finally, Custom Exception, Exception Handling Deep Dive, Checked Exception Handling Options, Try-with-Resources Internals, Multi-catch/Finally/Exception Chaining
 - `com.gktechverse.corejava.strings`
   - String Pool, equals vs ==, StringBuilder vs StringBuffer, Immutability
 - `com.gktechverse.corejava.collections`

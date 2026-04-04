@@ -7,9 +7,13 @@ import com.gktechverse.corejava.basics.VariablesDemo;
 import com.gktechverse.corejava.collections.CollectionsEcommerceSelectionDemo;
 import com.gktechverse.corejava.collections.CollectionsFrameworkInterviewDemo;
 import com.gktechverse.corejava.collections.hashmap.HashMapTeachingSeriesRunner;
+import com.gktechverse.corejava.exceptions.CheckedExceptionHandlingOptionsDemo;
 import com.gktechverse.corejava.exceptions.CheckedVsUncheckedDemo;
 import com.gktechverse.corejava.exceptions.CustomExceptionDemo;
+import com.gktechverse.corejava.exceptions.ExceptionHandlingDeepDiveDemo;
 import com.gktechverse.corejava.exceptions.TryCatchFinallyDemo;
+import com.gktechverse.corejava.exceptions.MultiCatchFinallyAndChainingDemo;
+import com.gktechverse.corejava.exceptions.TryWithResourcesInternalsDemo;
 import com.gktechverse.corejava.jvm.BoxingUnboxingDemo;
 import com.gktechverse.corejava.jvm.ClassLoadingDemo;
 import com.gktechverse.corejava.jvm.MemoryAreasDemo;
@@ -116,6 +120,10 @@ public class MainRunner {
         CheckedVsUncheckedDemo.main(new String[]{});
         TryCatchFinallyDemo.main(new String[]{});
         CustomExceptionDemo.main(new String[]{});
+        ExceptionHandlingDeepDiveDemo.main(new String[]{});
+        CheckedExceptionHandlingOptionsDemo.main(new String[]{});
+        TryWithResourcesInternalsDemo.main(new String[]{});
+        MultiCatchFinallyAndChainingDemo.main(new String[]{});
     }
 
     private static void runStrings() {
