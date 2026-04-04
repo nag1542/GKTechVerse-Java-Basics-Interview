@@ -1,90 +1,109 @@
 package com.gktechverse.corejava.exceptions;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 /**
- * Interview focus: why try-with-resources is safer than manual finally.
+ * Interview focus: pre-Java 7 manual close vs Java 7 try-with-resources using the same known I/O APIs.
  */
 public class TryWithResourcesInternalsDemo {
 
-    static class DemoResource implements AutoCloseable {
-        private final String name;
-        private final boolean throwOnClose;
-
-        DemoResource(String name, boolean throwOnClose) {
-            this.name = name;
-            this.throwOnClose = throwOnClose;
-            System.out.println("Opened " + name);
-        }
-
-        void doWork() {
-            System.out.println("Working with " + name);
+    /**
+     * Custom writer only for teaching: simulate close failure so we can observe close-order behavior.
+     */
+    static class FailingPrintWriter extends PrintWriter {
+        FailingPrintWriter(File file) throws IOException {
+            super(file);
         }
 
         @Override
         public void close() {
-            System.out.println("Closing " + name);
-            if (throwOnClose) {
-                throw new RuntimeException(name + " close failed");
-            }
+            super.close();
+            throw new RuntimeException("PrintWriter close failed");
         }
     }
 
     public static void main(String[] args) {
-        System.out.println("=== try-with-resources: internal behavior and close ordering ===");
+        System.out.println("=== try-with-resources internals (BufferedReader + PrintWriter) ===");
+
+        seedInputFile();
 
         try {
             preJava7FragileFinally();
         } catch (RuntimeException e) {
-            System.err.println("Manual finally risk: stmt.close() interrupted conn.close().");
+            System.err.println("Pre-Java 7 issue: writer close threw, reader close was skipped.");
         }
 
         java7TryWithResources();
-        suppressedExceptionMentalModel();
+        compilerFlowMentalModel();
         System.out.println();
     }
 
+    private static void seedInputFile() {
+        try (PrintWriter seedWriter = new PrintWriter(new File("test.txt"))) {
+            seedWriter.println("Try-with-resources copied this line.");
+        } catch (IOException e) {
+            System.err.println("Unable to create sample input file: " + e.getMessage());
+        }
+    }
+
     private static void preJava7FragileFinally() {
-        System.out.println("Pre-Java 7 style (manual finally):");
-        DemoResource conn = null;
-        DemoResource stmt = null;
+        System.out.println("Pre-Java 7 (manual finally):");
+
+        BufferedReader br = null;
+        FailingPrintWriter writer = null;
+
         try {
-            conn = new DemoResource("Connection", false);
-            stmt = new DemoResource("Statement", true);
-            stmt.doWork();
+            br = new BufferedReader(new FileReader("test.txt"));
+            writer = new FailingPrintWriter(new File("output_pre_java7.txt"));
+
+            String line = br.readLine();
+            writer.println(line);
+        } catch (IOException e) {
+            System.err.println("I/O error: " + e.getMessage());
         } finally {
-            if (stmt != null) {
-                stmt.close();
+            // If writer.close() throws, br.close() line below is never reached.
+            if (writer != null) {
+                writer.close();
             }
-            if (conn != null) {
-                conn.close();
+            // Resource-leak risk in pre-Java7 manual close style.
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    System.err.println("Reader close failed: " + e.getMessage());
+                }
             }
         }
     }
 
     private static void java7TryWithResources() {
-        try {
-            System.out.println("Java 7+ try-with-resources style:");
-            try (DemoResource conn = new DemoResource("Connection", false);
-                 DemoResource stmt = new DemoResource("Statement", true)) {
-                stmt.doWork();
-            }
+        System.out.println("Java 7+ try-with-resources:");
+
+        try (BufferedReader br = new BufferedReader(new FileReader("test.txt"));
+             FailingPrintWriter writer = new FailingPrintWriter(new File("output_java7.txt"))) {
+
+            String line = br.readLine();
+            writer.println(line);
+            System.out.println("Copied first line from test.txt to output_java7.txt");
+
+        } catch (IOException e) {
+            System.err.println("I/O handling failed: " + e.getMessage());
         } catch (RuntimeException e) {
-            System.err.println("Caught: " + e.getMessage());
+            System.err.println("Close failure captured by try-with-resources: " + e.getMessage());
+            if (e.getSuppressed().length > 0) {
+                System.err.println("Suppressed exceptions count: " + e.getSuppressed().length);
+            }
         }
     }
 
-    private static void suppressedExceptionMentalModel() {
-        try {
-            System.out.println("Suppressed behavior (primary + close failure):");
-            try (DemoResource conn = new DemoResource("Connection", false);
-                 DemoResource stmt = new DemoResource("Statement", true)) {
-                stmt.doWork();
-                throw new RuntimeException("Simulated primary exception from try block");
-            }
-        } catch (RuntimeException e) {
-            System.err.println("Primary exception: " + e.getMessage());
-            if (e.getSuppressed().length > 0) {
-                System.err.println("Suppressed close failure: " + e.getSuppressed()[0].getMessage());
-            }
-        }
+    private static void compilerFlowMentalModel() {
+        System.out.println("Compiler mental model:");
+        System.out.println("- Resources close automatically in reverse order (writer then reader).");
+        System.out.println("- If close throws, Java still attempts closing remaining resources.");
+        System.out.println("- Additional close failures are attached as suppressed exceptions.");
     }
 }
