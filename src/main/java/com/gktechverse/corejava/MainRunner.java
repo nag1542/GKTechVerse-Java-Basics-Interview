@@ -11,6 +11,7 @@ import com.gktechverse.corejava.exceptions.CheckedExceptionHandlingOptionsDemo;
 import com.gktechverse.corejava.exceptions.CheckedVsUncheckedDemo;
 import com.gktechverse.corejava.exceptions.CustomExceptionDemo;
 import com.gktechverse.corejava.exceptions.ExceptionHandlingDeepDiveDemo;
+import com.gktechverse.corejava.exceptions.ExceptionAntiPatternsDemo;
 import com.gktechverse.corejava.exceptions.TryCatchFinallyDemo;
 import com.gktechverse.corejava.exceptions.MultiCatchFinallyAndChainingDemo;
 import com.gktechverse.corejava.exceptions.TryWithResourcesInternalsDemo;
@@ -124,6 +125,7 @@ public class MainRunner {
         CheckedExceptionHandlingOptionsDemo.main(new String[]{});
         TryWithResourcesInternalsDemo.main(new String[]{});
         MultiCatchFinallyAndChainingDemo.main(new String[]{});
+        ExceptionAntiPatternsDemo.main(new String[]{});
     }
 
     private static void runStrings() {
