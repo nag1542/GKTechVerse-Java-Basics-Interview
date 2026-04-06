@@ -6,6 +6,10 @@ import com.gktechverse.corejava.basics.TypeCastingDemo;
 import com.gktechverse.corejava.basics.VariablesDemo;
 import com.gktechverse.corejava.collections.CollectionsEcommerceSelectionDemo;
 import com.gktechverse.corejava.collections.CollectionsFrameworkInterviewDemo;
+import com.gktechverse.corejava.collections.ArrayListInternalWorkingDemo;
+import com.gktechverse.corejava.collections.ArrayListMemoryOptimizationPatternsDemo;
+import com.gktechverse.corejava.collections.ArrayListVsLinkedListVsArrayDequeDemo;
+import com.gktechverse.corejava.collections.ArrayListGotchasDemo;
 import com.gktechverse.corejava.collections.hashmap.HashMapTeachingSeriesRunner;
 import com.gktechverse.corejava.exceptions.CheckedExceptionHandlingOptionsDemo;
 import com.gktechverse.corejava.exceptions.CheckedVsUncheckedDemo;
@@ -139,6 +143,10 @@ public class MainRunner {
         CollectionsFrameworkInterviewDemo.main(new String[]{});
         CollectionsEcommerceSelectionDemo.main(new String[]{});
         HashMapTeachingSeriesRunner.main(new String[]{});
+        ArrayListInternalWorkingDemo.main(new String[]{});
+        ArrayListMemoryOptimizationPatternsDemo.main(new String[]{});
+        ArrayListVsLinkedListVsArrayDequeDemo.main(new String[]{});
+        ArrayListGotchasDemo.main(new String[]{});
     }
 
     private static void runStaticAndMemory() {

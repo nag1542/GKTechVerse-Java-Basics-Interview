@@ -42,6 +42,14 @@ It helps learners:
   - HashMap deep dive: null key/value behavior, duplicate keys, collision buckets, linked-list to tree conversion rules, and thread-safety limitations
 - `com.gktechverse.corejava.collections.concurrenthashmap`
   - ConcurrentHashMap concurrency benefits and atomic update patterns
+- `com.gktechverse.corejava.collections.ArrayListInternalWorkingDemo`
+  - Next session: internal structure of ArrayList, add() flow, resize algorithm (1.5x growth), and operation complexity
+- `com.gktechverse.corejava.collections.ArrayListMemoryOptimizationPatternsDemo`
+  - Separate patterns session for pre-sizing, ensureCapacity(), and trimToSize() to avoid wasteful reallocations
+- `com.gktechverse.corejava.collections.ArrayListVsLinkedListVsArrayDequeDemo`
+  - Real-world comparison of ArrayList vs LinkedList vs ArrayDeque and when to use each
+- `com.gktechverse.corejava.collections.ArrayListGotchasDemo`
+  - 4 interview gotchas: Arrays.asList fixed-size list, autoboxing overhead, subList view behavior, and foreach fail-fast removal issue
 - `com.gktechverse.corejava.staticmemory`
   - Static keyword, static members, static blocks, Singleton vs static, Heap vs Stack, object creation flow
 - `com.gktechverse.corejava.multithreading`
