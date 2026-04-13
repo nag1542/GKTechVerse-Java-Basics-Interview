@@ -56,6 +56,13 @@ It helps learners:
   - Deadlock deep dive with enterprise real-time use cases, bad code vs good code solutions
 - `com.gktechverse.corejava.streams`
   - Loop vs Stream, lazy evaluation behavior, lambda expressions & functional interfaces, and most useful stream patterns (grouping/counting/aggregation/flatMap/short-circuit/parallel-streams/top-20-practice)
+- `com.gktechverse.corejava.solid`
+  - SOLID design principles with real-world problem/solution demos (starting with pre-SOLID issue examples)
+  - SRP demos: `solid.before.OrderServiceBeforeSolidDemo` and `solid.srp.SingleResponsibilityPrincipleDemo`
+  - OCP demo: `solid.ocp.OpenClosedPrincipleDemo` (strategy-based discounts + StudentDiscount extension)
+  - LSP demos: `solid.lsp.LiskovSubstitutionProblemDemo` and `solid.lsp.LiskovSubstitutionSolutionDemo`
+  - ISP demos: `solid.isp.InterfaceSegregationProblemDemo` and `solid.isp.InterfaceSegregationSolutionDemo`
+  - DIP demos: `solid.dip.DependencyInversionProblemDemo` and `solid.dip.DependencyInversionSolutionDemo`
 - `com.gktechverse.corejava.MainRunner`
   - Console menu to run demos by topic
 
@@ -615,4 +622,3 @@ If this project helps you, star the repo and use it as your interview revision n
 ## Java Collections Enterprise Notes
 
 A dedicated guide is available at `JAVA_COLLECTIONS_README.md` covering when to use `ArrayList`, `LinkedList`, `HashSet`, `LinkedHashSet`, `TreeSet`, `HashMap`, `LinkedHashMap`, `TreeMap`, `Queue`, `PriorityQueue`, and iterator behavior (fail-fast vs fail-safe).
-
