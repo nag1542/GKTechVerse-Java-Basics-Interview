@@ -60,7 +60,7 @@ It helps learners:
   - SOLID design principles with real-world problem/solution demos (starting with pre-SOLID issue examples)
   - SRP demos: `solid.before.OrderServiceBeforeSolidDemo` and `solid.srp.SingleResponsibilityPrincipleDemo`
   - OCP demo: `solid.ocp.OpenClosedPrincipleDemo` (strategy-based discounts + StudentDiscount extension)
-  - LSP demos: `solid.lsp.LiskovSubstitutionProblemDemo` and `solid.lsp.LiskovSubstitutionSolutionDemo`
+  - LSP demos: `solid.lsp.clear.LspBankAccountProblemDemo` and `solid.lsp.clear.LspBankAccountSolutionDemo`
   - ISP demos: `solid.isp.InterfaceSegregationProblemDemo` and `solid.isp.InterfaceSegregationSolutionDemo`
   - DIP demos: `solid.dip.DependencyInversionProblemDemo` and `solid.dip.DependencyInversionSolutionDemo`
 - `com.gktechverse.corejava.MainRunner`
