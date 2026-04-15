@@ -25,6 +25,7 @@ import com.gktechverse.corejava.jvm.MemoryAreasDemo;
 import com.gktechverse.corejava.multithreading.BankingTransferConsistencyAndDeadlockDemo;
 import com.gktechverse.corejava.multithreading.DeadlockEnterpriseUseCasesDemo;
 import com.gktechverse.corejava.multithreading.MultithreadingEnterpriseVideoRunner;
+import com.gktechverse.corejava.designpatterns.singleton.SingletonPatternsDemo;
 import com.gktechverse.corejava.oops.AbstractionDemo;
 import com.gktechverse.corejava.oops.AssociationAggregationCompositionDemo;
 import com.gktechverse.corejava.oops.ClassObjectDemo;
@@ -68,6 +69,7 @@ public class MainRunner {
             System.out.println("7. Static & Memory Concepts");
             System.out.println("8. Multithreading (Enterprise + Deadlock)");
             System.out.println("9. Streams (Loop vs Stream, Lazy Evaluation, Patterns)");
+            System.out.println("10. Design Patterns (Singleton)");
             System.out.println("0. Exit");
             System.out.print("Select a topic: ");
 
@@ -83,6 +85,7 @@ public class MainRunner {
                 case "7" -> runStaticAndMemory();
                 case "8" -> runMultithreading();
                 case "9" -> runStreams();
+                case "10" -> runDesignPatterns();
                 case "0" -> {
                     System.out.println("Thanks for practicing Core Java. Keep revising!");
                     scanner.close();
@@ -166,5 +169,8 @@ public class MainRunner {
     private static void runStreams() {
         StreamsInterviewRunner.main(new String[]{});
     }
-}
 
+    private static void runDesignPatterns() {
+        SingletonPatternsDemo.main(new String[]{});
+    }
+}
