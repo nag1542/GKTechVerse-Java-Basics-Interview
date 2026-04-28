@@ -67,7 +67,7 @@ public class MainRunner {
             System.out.println("5. Strings");
             System.out.println("6. Collections Framework");
             System.out.println("7. Static & Memory Concepts");
-            System.out.println("8. Multithreading (Enterprise + Deadlock)");
+            System.out.println("8. Multithreading (Enterprise + Deadlock + CompletableFuture)");
             System.out.println("9. Streams (Loop vs Stream, Lazy Evaluation, Patterns)");
             System.out.println("10. Design Patterns (Singleton)");
             System.out.println("0. Exit");
