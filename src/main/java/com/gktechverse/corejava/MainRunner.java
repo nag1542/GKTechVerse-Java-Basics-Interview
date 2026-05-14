@@ -22,6 +22,12 @@ import com.gktechverse.corejava.exceptions.TryWithResourcesInternalsDemo;
 import com.gktechverse.corejava.jvm.BoxingUnboxingDemo;
 import com.gktechverse.corejava.jvm.ClassLoadingDemo;
 import com.gktechverse.corejava.jvm.MemoryAreasDemo;
+import com.gktechverse.corejava.modernjava.records.RecordsPointDemo;
+import com.gktechverse.corejava.modernjava.sealedclasses.SealedClassesDemo;
+import com.gktechverse.corejava.modernjava.sealedrecords.SealedRecordsResultDemo;
+import com.gktechverse.corejava.modernjava.patternmatching.PatternMatchingDemo;
+import com.gktechverse.corejava.modernjava.switchpatternmatching.SwitchPatternMatchingDemo;
+import com.gktechverse.corejava.modernjava.paymentstate.PaymentStatePatternDemo;
 import com.gktechverse.corejava.multithreading.BankingTransferConsistencyAndDeadlockDemo;
 import com.gktechverse.corejava.multithreading.DeadlockEnterpriseUseCasesDemo;
 import com.gktechverse.corejava.multithreading.MultithreadingEnterpriseVideoRunner;
@@ -70,6 +76,7 @@ public class MainRunner {
             System.out.println("8. Multithreading (Enterprise + Deadlock + CompletableFuture)");
             System.out.println("9. Streams (Loop vs Stream, Lazy Evaluation, Patterns)");
             System.out.println("10. Design Patterns (Singleton)");
+            System.out.println("11. Modern Java Features (Records + Sealed)");
             System.out.println("0. Exit");
             System.out.print("Select a topic: ");
 
@@ -86,6 +93,7 @@ public class MainRunner {
                 case "8" -> runMultithreading();
                 case "9" -> runStreams();
                 case "10" -> runDesignPatterns();
+                case "11" -> runModernJavaFeatures();
                 case "0" -> {
                     System.out.println("Thanks for practicing Core Java. Keep revising!");
                     scanner.close();
@@ -172,5 +180,14 @@ public class MainRunner {
 
     private static void runDesignPatterns() {
         SingletonPatternsDemo.main(new String[]{});
+    }
+
+    private static void runModernJavaFeatures() {
+        RecordsPointDemo.main(new String[]{});
+        SealedClassesDemo.main(new String[]{});
+        SealedRecordsResultDemo.main(new String[]{});
+        PatternMatchingDemo.main(new String[]{});
+        SwitchPatternMatchingDemo.main(new String[]{});
+        PaymentStatePatternDemo.main(new String[]{});
     }
 }
