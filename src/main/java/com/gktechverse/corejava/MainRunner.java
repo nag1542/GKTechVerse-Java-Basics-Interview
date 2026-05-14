@@ -27,6 +27,7 @@ import com.gktechverse.corejava.modernjava.sealedclasses.SealedClassesDemo;
 import com.gktechverse.corejava.modernjava.sealedrecords.SealedRecordsResultDemo;
 import com.gktechverse.corejava.modernjava.patternmatching.PatternMatchingDemo;
 import com.gktechverse.corejava.modernjava.switchpatternmatching.SwitchPatternMatchingDemo;
+import com.gktechverse.corejava.modernjava.paymentstate.PaymentStatePatternDemo;
 import com.gktechverse.corejava.multithreading.BankingTransferConsistencyAndDeadlockDemo;
 import com.gktechverse.corejava.multithreading.DeadlockEnterpriseUseCasesDemo;
 import com.gktechverse.corejava.multithreading.MultithreadingEnterpriseVideoRunner;
@@ -187,5 +188,6 @@ public class MainRunner {
         SealedRecordsResultDemo.main(new String[]{});
         PatternMatchingDemo.main(new String[]{});
         SwitchPatternMatchingDemo.main(new String[]{});
+        PaymentStatePatternDemo.main(new String[]{});
     }
 }
