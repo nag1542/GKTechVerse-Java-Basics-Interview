@@ -25,15 +25,27 @@ public class CompletableFutureCombiningDemo {
                 .thenCombine(prefsCF, CompletableFutureDemoSupport.UserProfile::new);
 
         CompletableFuture<CompletableFutureDemoSupport.User> u =
-                CompletableFuture.supplyAsync(() -> CompletableFutureDemoSupport.fetchUser(id));
+                CompletableFuture.supplyAsync(
+                		() -> CompletableFutureDemoSupport.fetchUser(id));
         CompletableFuture<CompletableFutureDemoSupport.Orders> o =
-                CompletableFuture.supplyAsync(() -> CompletableFutureDemoSupport.fetchOrders(id));
+                CompletableFuture.supplyAsync(
+                		() -> CompletableFutureDemoSupport.fetchOrders(id));
         CompletableFuture<CompletableFutureDemoSupport.Metrics> m =
-                CompletableFuture.supplyAsync(() -> CompletableFutureDemoSupport.fetchMetrics(id));
+                CompletableFuture.supplyAsync(
+                		() -> CompletableFutureDemoSupport.fetchMetrics(id));
 
         CompletableFuture<Void> allDone = CompletableFuture.allOf(u, o, m);
-        CompletableFuture<CompletableFutureDemoSupport.Dashboard> dashboard = allDone.thenApply(v ->
-                new CompletableFutureDemoSupport.Dashboard(u.join(), o.join(), m.join()));
+        
+        CompletableFuture<CompletableFutureDemoSupport.Dashboard> dashboard 
+        = allDone.thenApply(v ->
+                new CompletableFutureDemoSupport.Dashboard(
+                		u.join(), 
+                		o.join(), 
+                		m.join()
+                		));
+        
+        
+        
 
         CompletableFuture<Object> fastest = CompletableFuture.anyOf(
                 CompletableFuture.supplyAsync(() -> {
@@ -54,5 +66,9 @@ public class CompletableFutureCombiningDemo {
         DemoLogger.info("allOf dashboard => " + dashboard.join());
         DemoLogger.info("anyOf fastest server => " + fastest.join());
         DemoLogger.info("Parallel total time trends to MAX(task time), not SUM(task times).");
+        
+        
+        
+        
     }
 }

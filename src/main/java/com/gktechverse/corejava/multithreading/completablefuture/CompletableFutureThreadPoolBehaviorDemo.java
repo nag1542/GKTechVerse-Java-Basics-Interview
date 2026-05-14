@@ -19,6 +19,11 @@ public class CompletableFutureThreadPoolBehaviorDemo {
     public static void run() {
         String id = "U-POOL-1";
         DemoLogger.info("7) CompletableFuture thread-pool behavior rules");
+        
+        CompletableFuture.supplyAsync(
+        		() -> CompletableFutureDemoSupport.fetchUser(id))
+        .thenApply(CompletableFutureDemoSupport.User::name)
+        .thenAccept(System.out::println);
 
         ruleOneSupplyAsyncDefaultPool(id);
         ruleTwoThenApplyExecutionRule(id);
@@ -28,7 +33,8 @@ public class CompletableFutureThreadPoolBehaviorDemo {
     }
 
     private static void ruleOneSupplyAsyncDefaultPool(String id) {
-        CompletableFuture<CompletableFutureDemoSupport.User> userCF = CompletableFuture.supplyAsync(() -> {
+        CompletableFuture<CompletableFutureDemoSupport.User> userCF 
+        = CompletableFuture.supplyAsync(() -> {
             DemoLogger.info("Rule 1: supplyAsync thread = " + Thread.currentThread().getName());
             return CompletableFutureDemoSupport.fetchUser(id);
         });

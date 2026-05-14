@@ -20,17 +20,21 @@ public class CompletableFutureCreationDemo {
         DemoLogger.info("2) CompletableFuture creation demo");
 
         CompletableFuture<CompletableFutureDemoSupport.User> userCF =
-                CompletableFuture.supplyAsync(() -> CompletableFutureDemoSupport.fetchUser(userId));
+                CompletableFuture.supplyAsync(
+                		() -> CompletableFutureDemoSupport.fetchUser(userId));
 
         CompletableFuture<Void> logCF =
                 CompletableFuture.runAsync(() -> DemoLogger.info("Audit event written"));
 
         CompletableFuture<String> done = CompletableFuture.completedFuture("cached-value");
-        CompletableFuture<String> failed = CompletableFuture.failedFuture(new RuntimeException("error"));
+        
+        CompletableFuture<String> failed = CompletableFuture.failedFuture(
+        		new RuntimeException("error"));
 
         ExecutorService ioPool = Executors.newFixedThreadPool(20);
         CompletableFuture<CompletableFutureDemoSupport.User> userCF2 =
-                CompletableFuture.supplyAsync(() -> CompletableFutureDemoSupport.fetchUser(userId), ioPool);
+                CompletableFuture.supplyAsync(
+                		() -> CompletableFutureDemoSupport.fetchUser(userId), ioPool);
 
         DemoLogger.info("Default pool for supplyAsync is ForkJoinPool.commonPool().");
         DemoLogger.info("Use custom executor for I/O heavy tasks to avoid starving CPU work.");

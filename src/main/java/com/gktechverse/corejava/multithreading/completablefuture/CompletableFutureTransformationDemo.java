@@ -20,9 +20,11 @@ public class CompletableFutureTransformationDemo {
         ExecutorService ioPool = Executors.newFixedThreadPool(4);
 
         CompletableFuture<CompletableFutureDemoSupport.User> userCF =
-                CompletableFuture.supplyAsync(() -> CompletableFutureDemoSupport.fetchUser(userId));
+                CompletableFuture.supplyAsync(
+                		() -> CompletableFutureDemoSupport.fetchUser(userId));
 
-        CompletableFuture<String> nameCF = userCF.thenApply(CompletableFutureDemoSupport.User::name);
+        CompletableFuture<String> nameCF = userCF.thenApply(
+        		CompletableFutureDemoSupport.User::name);
 
         CompletableFuture<String> result = userCF
                 .thenApply(CompletableFutureDemoSupport.User::name)

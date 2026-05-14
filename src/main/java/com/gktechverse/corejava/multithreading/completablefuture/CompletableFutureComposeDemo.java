@@ -21,19 +21,25 @@ public class CompletableFutureComposeDemo {
         ExecutorService ioPool = Executors.newFixedThreadPool(8);
 
         CompletableFuture<CompletableFutureDemoSupport.User> userCF =
-                CompletableFuture.supplyAsync(() -> CompletableFutureDemoSupport.fetchUser(userId), ioPool);
+                CompletableFuture.supplyAsync(
+                		() -> CompletableFutureDemoSupport.fetchUser(userId), ioPool);
 
         CompletableFuture<CompletableFuture<List<String>>> wrong =
-                userCF.thenApply(user -> CompletableFutureDemoSupport.fetchOrdersAsync(user.id()));
+                userCF.thenApply(
+                		user -> CompletableFutureDemoSupport.fetchOrdersAsync(user.id()));
 
         CompletableFuture<List<String>> orders =
-                userCF.thenCompose(user -> CompletableFutureDemoSupport.fetchOrdersAsync(user.id()));
+                userCF.thenCompose(
+                		user -> CompletableFutureDemoSupport.fetchOrdersAsync(user.id()));
 
         CompletableFuture<CompletableFutureDemoSupport.ApiResponse> response = CompletableFuture
-                .supplyAsync(() -> CompletableFutureDemoSupport.fetchUser(userId), ioPool)
-                .thenCompose(user -> CompletableFutureDemoSupport.fetchOrdersAsync(user.id()))
+                .supplyAsync(
+                		() -> CompletableFutureDemoSupport.fetchUser(userId), ioPool)
+                .thenCompose(
+                		user -> CompletableFutureDemoSupport.fetchOrdersAsync(user.id()))
                 .thenApply(CompletableFutureDemoSupport::buildResponse)
-                .exceptionally(ex -> CompletableFutureDemoSupport.ApiResponse.error(ex.getMessage()));
+                .exceptionally(
+                		ex -> CompletableFutureDemoSupport.ApiResponse.error(ex.getMessage()));
 
         DemoLogger.info("Wrong type from thenApply => CF<CF<List<String>>>: " + wrong.join().join());
         DemoLogger.info("Correct type from thenCompose => CF<List<String>>: " + orders.join());

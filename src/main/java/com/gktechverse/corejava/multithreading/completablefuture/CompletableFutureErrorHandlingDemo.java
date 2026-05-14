@@ -15,11 +15,15 @@ public class CompletableFutureErrorHandlingDemo {
 
     public static void run() {
         String userId = "U-ERROR";
+        
+        CompletableFuture.supplyAsync(
+        		() -> CompletableFutureDemoSupport.fetchUser(userId))
+        .thenApply(CompletableFutureDemoSupport.User::name)
+        .thenAccept(System.out::println);
+        
 
         CompletableFuture<CompletableFutureDemoSupport.User> safe = CompletableFuture
-                .supplyAsync(() -> {
-                    throw new RuntimeException("User service unavailable for " + userId);
-                })
+                .supplyAsync(() -> CompletableFutureDemoSupport.fetchUser(userId))
                 .exceptionally(ex -> {
                     DemoLogger.warn("Failed to fetch user " + userId + ", falling back to guest.");
                     return CompletableFutureDemoSupport.guestUser();
@@ -27,12 +31,11 @@ public class CompletableFutureErrorHandlingDemo {
 
         CompletableFuture<String> result = CompletableFuture
                 .supplyAsync(() -> CompletableFutureDemoSupport.fetchUser("U-2001"))
-                .handle((user, ex) -> ex != null ? "Error: " + ex.getMessage() : user.name());
+                .handle(
+                		(user, ex) -> ex != null ? "Error: " + ex.getMessage() : user.name());
 
         CompletableFuture<CompletableFutureDemoSupport.User> withLog = CompletableFuture
-                .supplyAsync(() -> {
-                    throw new RuntimeException("Timeout while fetching user");
-                })
+                .supplyAsync(() -> CompletableFutureDemoSupport.fetchUser("U-2002"))
                 .whenComplete((user, ex) -> {
                     if (ex != null) {
                         DemoLogger.warn("metrics.increment(user.fetch.error)");
@@ -44,9 +47,7 @@ public class CompletableFutureErrorHandlingDemo {
 
         CompletableFuture<String> risky = CompletableFuture
                 .supplyAsync(() -> CompletableFutureDemoSupport.fetchUser("U-2002"))
-                .thenApply(user -> {
-                    throw new RuntimeException("NPE-like transformation issue");
-                })
+                .thenApply(CompletableFutureDemoSupport.User::name)
                 .exceptionally(ex -> "Unknown");
 
         DemoLogger.info("exceptionally fallback user => " + safe.join());
