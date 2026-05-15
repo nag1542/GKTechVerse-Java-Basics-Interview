@@ -50,6 +50,12 @@ It helps learners:
   - Real-world comparison of ArrayList vs LinkedList vs ArrayDeque and when to use each
 - `com.gktechverse.corejava.collections.ArrayListGotchasDemo`
   - 4 interview gotchas: Arrays.asList fixed-size list, autoboxing overhead, subList view behavior, and foreach fail-fast removal issue
+- `com.gktechverse.corejava.designpatterns`
+  - Singleton and creational pattern demos for interview prep
+- `com.gktechverse.corejava.designpatterns.factory`
+  - Factory Method and Abstract Factory demos with separate classes (notification + UI-family examples)
+- `com.gktechverse.corejava.designpatterns.builder`
+  - Builder demos: User creation + toBuilder() modified-copy pattern, and invalid-object prevention with Order validation
 - `com.gktechverse.corejava.staticmemory`
   - Static keyword, static members, static blocks, Singleton vs static, Heap vs Stack, object creation flow
 - `com.gktechverse.corejava.multithreading`
